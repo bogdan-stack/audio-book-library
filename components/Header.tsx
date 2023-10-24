@@ -124,6 +124,7 @@ return (
                 bg-transparent
                 text-neutral-300
                 font-medium
+                text-sm
                 "
                 >
                     Înregistrează-te!
@@ -136,6 +137,7 @@ return (
                 bg-lime-600
                 text-black
                 font-bold
+                text-sm
                 "
                 >
                     Log-in!
