@@ -6,14 +6,17 @@ import { BiSearch } from "react-icons/bi";
 import Box from "./Box";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
+import { Book } from "@/types";
 
 interface SidebarProps {
     children: React.ReactNode;
+    books: Book[]
 }
 
 
 const Sidebar:React.FC<SidebarProps> = ({
-    children
+    children,
+    books
 }) => {
 const pathname = usePathname();
 
@@ -64,7 +67,7 @@ const routes = useMemo(()=> [
                     </div>
                 </Box>
                 <Box className="overflow-y-auto h-full">
-                    <Library />
+                    <Library books={books}/>
                 </Box>
             </div>
             <main className="h-full flex-1 overflow-y-auto py-2">

@@ -7,6 +7,8 @@ import SupabaseProvider from '@/providers/SupabaseProvider'
 import UserProvider from '@/providers/UserProvider'
 import ModalProvider from '@/providers/ModalProvider'
 import ToasterProvider from '@/providers/ToasterProvider'
+import getBooksByUserId from '@/actions/getBooksById'
+import Player from '@/components/Player'
 
 
 const font = Figtree({ subsets: ['latin'] })
@@ -16,11 +18,14 @@ export const metadata: Metadata = {
   description: 'Asculta!',
 }
 
-export default function RootLayout({
+export const revalidate = 0;
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const userBooks = await getBooksByUserId();
   return (
     <html lang="en">
       <body className={font.className}>
@@ -28,9 +33,10 @@ export default function RootLayout({
           <ToasterProvider />
           <UserProvider>
             <ModalProvider />
-        <Sidebar>
+        <Sidebar books={userBooks}>
           {children}
         </Sidebar>
+        <Player />
         </UserProvider>
         </SupabaseProvider>
       </body>

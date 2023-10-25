@@ -1,7 +1,14 @@
+import getBooks from "@/actions/getBooks";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
+import PageContent from "./components/PageContent";
 
-export default function Home() {
+
+export const revalidate = 0;
+
+export default async function Home() {
+  const books = await getBooks();
+
   return (
    <div className="
    bg-neutral-900
@@ -54,9 +61,7 @@ export default function Home() {
           Cele mai noi Audiobook-uri
         </h1>
       </div>
-      <div>
-        List of Songs!
-      </div>
+      <PageContent books={books}/>
     </div>
    </div>
   )

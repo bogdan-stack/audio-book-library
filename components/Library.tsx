@@ -3,9 +3,29 @@
 import { TbPlaylist} from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const Library = () => {
+import  useAuthModal  from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
+import { Book } from "@/types";
+import MediaItem from "./MediaItem";
+
+interface LibraryProps {
+    books: Book[];
+}
+
+const Library: React.FC<LibraryProps> = ({
+    books
+}) => {
+    const authModal = useAuthModal();
+    const uploadModal = useUploadModal();
+    const { user } = useUser();
+
     const onClick = () => {
-        //Handle upload later
+        if (!user) {
+            return authModal.onOpen();
+        }
+
+        return uploadModal.onOpen();
     };
     return (
         <div className="flex flex-col">
@@ -52,7 +72,13 @@ const Library = () => {
             mt-4
             px-3
             ">
-                Lista Audiobook-uri
+                {books.map((item) =>(
+                    <MediaItem 
+                    onClick={() => {}}
+                    key={item.id}
+                    data={item}
+                    />
+                ))}
             </div>
         </div>
     );
