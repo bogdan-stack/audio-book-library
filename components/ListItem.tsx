@@ -42,7 +42,7 @@ const ListItem: React.FC<ListItemProps> = ({
         </div>
         <div>
     <div className="font-medium text-white">Platforma Audiobook FAR</div>
-    <p className="text-neutral-300">Instruiește-te așa cum vei lupta!</p>
+    <p className="text-neutral-300">Ascultă, învață, luptă!</p>
   </div>
 </div>
   );
