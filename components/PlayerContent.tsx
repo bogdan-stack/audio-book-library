@@ -108,7 +108,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
         <div
           className="
             flex
-            md:hidden
+            hidden
             col-auto
             w-full
             justify-end
@@ -135,14 +135,14 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
 
         <div
           className="
-            hidden
+            flex
             h-full
             md:flex
             justify-center
             items-center
             w-full
             max-w-[722px]
-            gap-x-6
+            gap-x-2
           "
         >
           <AiFillStepBackward
