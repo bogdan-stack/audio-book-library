@@ -57,7 +57,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
-        <p className="text-white truncate">{data.denumire}</p>
+        <p className="text-white w-32 text-xs">{data.denumire}</p>
       </div>
     </div>
   );
