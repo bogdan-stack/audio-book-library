@@ -23,7 +23,7 @@ const Player = () => {
         bottom-0
         border-rounded-t-2xl
         border-y
-        border-lime-800
+        border-neutral-800
         bg-gradient-to-b
         from-neutral-900
         to-lime-800
