@@ -98,7 +98,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
   }
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-full w-full bottom-0">
         <div className="flex w-full justify-start">
           <div className="flex items-center gap-x-4">
             <MediaItem data={book} />
@@ -107,7 +107,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
 
         <div
           className="
-            flex
             hidden
             col-auto
             w-full
