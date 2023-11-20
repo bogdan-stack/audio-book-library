@@ -25,53 +25,17 @@ const Player = () => {
   }
 
   return (
-    <div
-  className={`
-    fixed
-    bottom-0
-    border-rounded-t-2xl
-    border-y
-    border-neutral-600
-    bg-gradient-to-b
-    from-neutral-900
-    to-lime-800
-    to-g
-    w-full
-    py-1
-    h-[80px]
-    px-3
-    transition-all
-    duration-500
-    flex
-    flex-col
-    gap-0,5
-    items-center
-    justify-space-between
-    ${isExpanded ? 'h-screen bottom-0' : 'h-[90px] bottom-0'}
-  `}
->
-  <button onClick={handleClick}
-    className={`
-      bg-transparent
-      hover:bg-lime-700
-      text-lime-800
-      font-semibold
-      hover:text-white
-      py-,5
-      px-3
-      border
-      border-lime-800
-      hover:border-transparent
-      rounded-full
-    `}
-  >
-    {isExpanded ? <IoIosArrowDown /> : <IoIosArrowUp />}
-  </button>
-  <div className="group">
-   {isExpanded && <ChapterList />}
+    <div className={`fixed bottom-0 border-rounded-t-2xl border-y border-neutral-600 bg-gradient-to-b from-neutral-900 to-lime-800 w-full py-1 px-3 transition-all duration-500 flex flex-col justify-between items-center ${isExpanded ? 'h-screen bottom-0' : 'h-[90px] bottom-0'}`}>
+      <div className="p-,5">
+      </div>
+        <button onClick={handleClick} className={`bg-transparent hover:bg-lime-700 text-lime-800 font-semibold hover:text-white py-0.5 px-3 border border-lime-800 hover:border-transparent rounded-full ${isExpanded ? 'mt-8 mb-2' : ''}`}>
+          {isExpanded ? <IoIosArrowDown /> : <IoIosArrowUp />}
+        </button>
+    {isExpanded && <ChapterList />}
+    <div className={`absolute bottom-0 w-full ${isExpanded ? 'bottom-0' : 'relative'}`}>
+      <PlayerContent key={bookUrl} book={book} bookUrl={bookUrl} />
+    </div>
   </div>
-  <PlayerContent key={bookUrl} book={book} bookUrl={bookUrl} />
-</div>
   );
 }
 

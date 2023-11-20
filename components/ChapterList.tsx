@@ -18,11 +18,17 @@ const ChapterList: React.FC = () => {
   ]; // Dummy chapters
 
   return (
-    <ul className="list-none p-7 my-1 w-96 overflow-y-auto max-h-[620px]">
+    <>
+    <div className="pb-[90px] overflow-y-auto max-h-[calc(100vh - 90px)]">
+    <ul className="list-none p-7 my-1 w-96">
       {chapters.map((chapter, index) => (
         <ChapterItem key={index} title={chapter.title} progress={chapter.progress} />
       ))}
     </ul>
+  </div>
+  <div className="pb-[70px] border-rounded-t-2xl border-y border-neutral-600">
+  </div>
+  </>
   );
 };
 
