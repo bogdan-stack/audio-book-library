@@ -19,8 +19,8 @@ const ChapterList: React.FC = () => {
 
   return (
     <>
-    <div className="pb-[90px] overflow-y-auto max-h-[calc(100vh - 90px)]">
-    <ul className="list-none p-7 my-1 w-96">
+    <div className=" flex h-full overflow-y-auto">
+    <ul className="list-none pl-6 pr-6 w-96">
       {chapters.map((chapter, index) => (
         <ChapterItem key={index} title={chapter.title} progress={chapter.progress} />
       ))}

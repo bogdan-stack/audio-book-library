@@ -55,7 +55,34 @@ export interface Database {
           }
         ]
       }
+      chapters: {
+        Row: {
+          chapter_title: string | null
+          chapter_progress: number | null
+          id: number
+        }
+        Insert: {
+          chapter_title?: string | null
+          chapter_progress?: number | null
+          id?: number
+        }
+        Update: {
+          chapter_title?: string | null
+          chapter_progress?: number | null
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_id_fkey"
+            columns: ["id"]
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
+    
+
     Views: {
       [_ in never]: never
     }
