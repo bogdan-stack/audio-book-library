@@ -117,7 +117,7 @@ const UploadModal = () => {
         title="Adaugă Audiobook"
         description="Încarcă un fișier mp3"
         isOpen={uploadModal.isOpen}
-        onChange={() => {}}
+        onChange={onChange}
     >
         <form
         onSubmit={handleSubmit(onSubmit)}

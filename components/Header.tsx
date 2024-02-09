@@ -11,6 +11,9 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -38,6 +41,7 @@ const handleLogout = async () => {
         toast.success('Delogare cu success!');
     }
 }
+
 
 return (
   <div
@@ -98,7 +102,7 @@ return (
         gap-x-2
         items-center
         ">
-            <button className="
+            <Link href='/' className="
             rounded-full
             p-2
             bg-white
@@ -110,8 +114,8 @@ return (
             ">
                 <HiHome className="text-black" size={20} />
 
-            </button>
-            <button className="
+            </Link>
+            <Link href='/search' className="
             rounded-full
             p-2
             bg-white
@@ -123,7 +127,7 @@ return (
             ">
                 <BiSearch className="text-black" size={20} />
 
-            </button>
+            </Link>
         </div>
         <div
         className="

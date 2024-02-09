@@ -1,10 +1,11 @@
 "use client";
 
 import useSound from "use-sound";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
+
 
 import { Book } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
@@ -59,19 +60,57 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     player.setId(previousBook);
   }
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  
   const [play, { pause, sound }] = useSound(
     bookUrl,
     {
       volume: volume,
-      onplay: () => setIsPlaying(true),
+      onplay: () => {
+        setIsPlaying(true);
+        // Start the counter when the audio starts playing
+        intervalRef.current = setInterval(() => {
+          setCurrentTime((time) => time + 1);
+        }, 1000);
+      },
       onend: () => {
         setIsPlaying(false);
         onPlayNext();
+        // Stop the counter when the audio ends
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
       },
-      onpause: () => setIsPlaying(false),
+      onpause: () => {
+        setIsPlaying(false);
+        // Stop the counter when the audio is paused
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      },
       format: ['mp3']
     }
   );
+  
+  useEffect(() => {
+    // Stop the counter when the component is unmounted
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
+
+  const [duration, setDuration] = useState(0);
+  useEffect(() => {
+    if (sound?._duration) {
+      setDuration(sound._duration);
+    }
+  }, [sound, sound?._i]);
 
   useEffect(() => {
     sound?.play();
@@ -97,20 +136,27 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     }
   }
 
+  function formatTime(seconds: number) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
   return (
-    <div className="flex h-full w-full bottom-0">
+    <>
+    <div className="flex h-auto w-full bottom-0">
         <div className="flex w-full justify-start">
           <div className="flex items-center gap-x-4">
             <MediaItem data={book} />
           </div>
         </div>
-
+      <div className="flex items-center gap-x-4">
         <div
           className="
             hidden
             col-auto
             w-full
-            justify-end
+            justify-center
             items-center
           "
         >
@@ -181,7 +227,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             "
           />
         </div>
-
+        </div>
+        
         <div className="hidden md:flex w-full justify-end pr-2">
           <div className="flex items-center gap-x-2 w-[120px]">
             <VolumeIcon
@@ -195,8 +242,12 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
             />
           </div>
         </div>
-
       </div>
+      <div className="flex justify-between w-full px-2">
+      <h1>{formatTime(Math.floor(duration))}</h1>
+      <h1>{formatTime(currentTime)}</h1>
+      </div>
+      </>
    );
 }
 
