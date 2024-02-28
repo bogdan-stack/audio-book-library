@@ -8,12 +8,12 @@ import { BiSearch } from "react-icons/bi";
 import Button from "./Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { useMemo } from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useUser } from "@/hooks/useUserAuth";
+
+
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -28,19 +28,31 @@ const Header: React.FC<HeaderProps> = ({
     const router = useRouter();
 
     const supabaseClient = useSupabaseClient();
-    const { user } = useUser();
+    const user = useUser();
 
-const handleLogout = async () => {
-    const { error } = await supabaseClient.auth.signOut();
-    // Reset any playing song in the future
-    router.refresh();
-
-    if (error) {
-        toast.error(error.message);
+const handleRoutes = (route: string) => {
+    if (!user){
+        toast.error('Trebuie să fii logat pentru a accesa această pagină!');
+        router.push('/');
     } else {
-        toast.success('Delogare cu success!');
+        router.push(route);
     }
 }
+
+const handleLogout = async () => {
+    const res = await fetch('/api/auth/logout', { method: 'POST' });
+  if (res.ok) {
+    console.log(res);
+    console.log('Token deleted');
+    location.replace('/');
+    toast.success('Delogare cu success!');
+  } else {
+    console.log('Failed to delete token');
+    toast.error('Delogare eșuată!');
+  }
+
+};
+
 
 
 return (
@@ -102,7 +114,12 @@ return (
         gap-x-2
         items-center
         ">
-            <Link href='/' className="
+            <Link href='#'
+            onClick={(e) => {
+                e.preventDefault();
+                handleRoutes('/')
+            }}
+            className="
             rounded-full
             p-2
             bg-white
@@ -115,7 +132,12 @@ return (
                 <HiHome className="text-black" size={20} />
 
             </Link>
-            <Link href='/search' className="
+            <Link href='#'
+            onClick={(e) => {
+                e.preventDefault();
+                handleRoutes('/search')
+            }}
+            className="
             rounded-full
             p-2
             bg-white
@@ -152,7 +174,8 @@ return (
                         Logout
                     </Button>
                     <Button
-                    onClick={() => router.push('/account')}
+                    id="/account"
+                    onClick={() => handleRoutes('/account')}
                     className="bg-white"
                     >
                         <FaUserAlt />
@@ -160,19 +183,7 @@ return (
                 </div>
             ): (
             <>
-            <div>
-                <Button
-                onClick={authModal.onOpen}
-                className="
-                bg-transparent
-                text-neutral-300
-                font-medium
-                text-sm
-                "
-                >
-                    Înregistrează-te!
-                </Button>
-            </div>
+
             <div>
                 <Button
                 onClick={authModal.onOpen}

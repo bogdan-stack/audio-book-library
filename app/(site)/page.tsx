@@ -1,10 +1,13 @@
+
 import getBooks from "@/actions/getBooks";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 import PageContent from "./components/PageContent";
+import WelcomeMessage from "./components/WelcomeMessage";
 
 
 export const revalidate = 0;
+
 
 export default async function Home() {
   const books = await getBooks();
@@ -19,16 +22,9 @@ export default async function Home() {
    overflow-y-auto
    ">
     <Header>
+
     <div className="mb-2">
-      <h1
-      className="
-      text-white
-      text-3xl
-      font-semibold
-      "
-      >
-        Bine ai venit!
-      </h1>
+      <WelcomeMessage />
       <div
       className="
       grid
@@ -40,6 +36,7 @@ export default async function Home() {
       mt-4
       "
       >
+
         <ListItem
         image="/images/heraldica.png"
         name="Liked"

@@ -1,0 +1,3 @@
+Server is running on port 3002
+> Ready on http://localhost::\\.\pipe\9d742a58-e801-4b3a-aeb6-d8afd3fdcc2c
+invalid input syntax for type uuid: "undefined"

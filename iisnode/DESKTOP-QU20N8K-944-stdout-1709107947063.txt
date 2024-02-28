@@ -1,0 +1,16 @@
+Server is running on port 3002
+> Ready on http://localhost::\\.\pipe\5a2473d8-b6c2-4b05-93e9-cf4360de3365
+Verify route hit
+Verifying token
+{
+  userId: 1,
+  userEmail: 'b.helerea.bh@gmail.com',
+  userName: 'Bogdan Helerea',
+  userRole: 'admin',
+  iat: 1709104568,
+  exp: 1709108168
+}
+Connected to the database successfully
+Bine ai venit, Bogdan Helerea!
+invalid input syntax for type uuid: "undefined"
+invalid input syntax for type uuid: "undefined"

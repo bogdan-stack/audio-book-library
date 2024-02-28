@@ -4,7 +4,7 @@ import { Book } from "@/types";
 import MediaItem from "@/components/MediaItem";
 //import LikeButton from "@/components/LikeButton";
 import useOnPlay from "@/hooks/useOnPlay";
-
+import { useUser } from "@/hooks/useUserAuth";
 
 interface SearchContentProps {
   books: Book[];
@@ -14,8 +14,9 @@ const SearchContent: React.FC<SearchContentProps> = ({
   books
 }) => {
   const onPlay = useOnPlay(books);
+  const user = useUser();
 
-  if (books.length === 0) {
+  if (books.length === 0 || !user) {
     return (
       <div
         className="

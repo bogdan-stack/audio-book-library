@@ -1,0 +1,2 @@
+Server is running on port 3002
+> Ready on http://localhost::\\.\pipe\72e49983-9a13-43e0-81bd-0fde86d8adf9

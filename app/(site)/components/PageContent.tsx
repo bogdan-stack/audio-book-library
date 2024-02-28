@@ -2,6 +2,7 @@
 import { Book } from "@/types";
 import BookItem from "@/components/BookItem";
 import useOnPlay from "@/hooks/useOnPlay";
+import { useUser } from "@/hooks/useUserAuth";
 
 interface PageContentProps {
     books: Book[];
@@ -11,8 +12,9 @@ const PageContent: React.FC<PageContentProps> = ({
     books
 }) => {
     const onPlay = useOnPlay(books);
+    const user = useUser();
 
-    if (books.length === 0) {
+    if (books.length === 0 || !user) {
         return (
         <div className="
         mt-4

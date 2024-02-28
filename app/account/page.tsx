@@ -1,16 +1,18 @@
-import getBooksByTitle from "@/actions/getBooksByTitle";
-import Header from "@/components/Header";
+"use client";
 
+import Header from "@/components/Header";
+import { useState } from "react";
 import AccountContent from "./components/AccountContent";
+
 
 export const revalidate = 0;
 
-interface SearchProps {
-  searchParams: { denumire: string }
+interface AccountProps {
+  authToken: string;
 };
 
-const Search = async ({ searchParams }: SearchProps) => {
-  const books = await getBooksByTitle(searchParams.denumire);
+const Account = () => {
+  
 
   return (
     <div
@@ -30,9 +32,9 @@ const Search = async ({ searchParams }: SearchProps) => {
           </h1>
         </div>
       </Header>
-      <AccountContent books={books} />
+      <AccountContent/>
     </div>
   );
 }
 
-export default Search;
+export default Account;

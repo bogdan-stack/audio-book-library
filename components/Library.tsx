@@ -4,7 +4,7 @@ import { TbPlaylist} from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import  useAuthModal  from "@/hooks/useAuthModal";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks/useUserAuth";
 import useUploadModal from "@/hooks/useUploadModal";
 import { Book } from "@/types";
 import MediaItem from "./MediaItem";
@@ -18,14 +18,15 @@ const Library: React.FC<LibraryProps> = ({
 }) => {
     const authModal = useAuthModal();
     const uploadModal = useUploadModal();
-    const { user } = useUser();
+    const  user  = useUser();
 
     const onClick = () => {
-        if (!user) {
+        if (!user || user.userRole === "user") {
             return authModal.onOpen();
+        } else if (user.userRole === "admin") {
+            return uploadModal.onOpen();
         }
 
-        return uploadModal.onOpen();
     };
     return (
         <div className="flex flex-col">

@@ -1,0 +1,13 @@
+(node:1216) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+The requested resource isn't a valid image for /images/heraldica.png received text/html; charset=utf-8
+ImageError: The requested resource isn't a valid image.
+    at imageOptimizer (D:\Mini Proiecte\Proiecte\audio-book-library\audio-book-library\node_modules\next\dist\server\image-optimizer.js:565:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async cacheEntry.imageResponseCache.get.incrementalCache (D:\Mini Proiecte\Proiecte\audio-book-library\audio-book-library\node_modules\next\dist\server\next-server.js:519:61)
+    at async D:\Mini Proiecte\Proiecte\audio-book-library\audio-book-library\node_modules\next\dist\server\response-cache\index.js:92:36
+    at async D:\Mini Proiecte\Proiecte\audio-book-library\audio-book-library\node_modules\next\dist\lib\batcher.js:43:32 {
+  statusCode: 400
+}
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
