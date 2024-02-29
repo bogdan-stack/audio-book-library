@@ -114,8 +114,8 @@ const UploadModal = () => {
 
   return (
     <Modal
-        title="Adaugă Audiobook"
-        description="Încarcă un fișier mp3"
+        title="Adaugă un Audiobook sau un Capitol nou"
+        description="Aveți posibilitatea să adăugați un audiobook sau un capitol nou pentru un audiobook existent."
         isOpen={uploadModal.isOpen}
         onChange={onChange}
     >
