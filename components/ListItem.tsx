@@ -1,16 +1,15 @@
 "use client"
 
 import Image from 'next/image';
+import image from '@/public/images/heraldica.png';
 import { useRouter } from 'next/navigation';
 
 interface ListItemProps {
-    image: string;
     name: string;
     href: string;
 }
 
 const ListItem: React.FC<ListItemProps> = ({
-    image,
     name,
     href
 }) => {
@@ -34,8 +33,8 @@ const ListItem: React.FC<ListItemProps> = ({
         ">
         <Image
         className="object-cover"
-        width={64}
-        height={64}
+        width={45}
+        height={45}
         src={image}
         alt="Image"
         />

@@ -1,9 +1,19 @@
 
 import getBooks from "@/actions/getBooks";
+import getAudiobooks from "@/actions/getAudiobooks";
+import getChapters from "@/actions/getChapters";
 import Header from "@/components/Header";
-import ListItem from "@/components/ListItem";
+
 import PageContent from "./components/PageContent";
 import WelcomeMessage from "./components/WelcomeMessage";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/HeroCard"
 
 
 export const revalidate = 0;
@@ -11,6 +21,9 @@ export const revalidate = 0;
 
 export default async function Home() {
   const books = await getBooks();
+  const audiobooks = await getAudiobooks();
+  const chapters = await getChapters();
+
 
   return (
    <div className="
@@ -37,11 +50,22 @@ export default async function Home() {
       "
       >
 
-        <ListItem
-        image="/images/heraldica.png"
-        name="Liked"
-        href="liked"
-        />
+        <Card>
+          <div className="flex justify-center items-center">
+          <CardContent className=" justify-center">
+            <img
+            src="/images/heraldica.png"
+            width={64}
+            height={64}
+            />
+          </CardContent>
+          <CardHeader>
+            <CardTitle className=" font-medium ">Platforma Audiobook FAR</CardTitle>
+            <CardDescription>Ascultă, învață, luptă!</CardDescription>
+          </CardHeader>
+          
+          </div>
+        </Card>
       </div>
     </div>
     </Header>
@@ -58,7 +82,7 @@ export default async function Home() {
           Cele mai noi Audiobook-uri
         </h1>
       </div>
-      <PageContent books={books}/>
+      <PageContent books={books} audiobooks={audiobooks} chapters={chapters} />
     </div>
    </div>
   )

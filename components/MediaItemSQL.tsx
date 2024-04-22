@@ -6,26 +6,26 @@ import useLoadImage from "@/hooks/useLoadImage";
 import { Chapter, Audiobook } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 
-interface MediaItemProps {
+interface MediaItemSQLProps {
   data: Chapter;
+  audiobookData: Audiobook;
   onClick?: (id: string) => void;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({
+const MediaItemSQL: React.FC<MediaItemSQLProps> = ({
   data,
+  audiobookData,
   onClick,
 }) => {
   const player = usePlayer();
-  const imageUrl = "/images/album3.jpg"
+  const imageUrl = audiobookData.cover_path;
 
   const handleClick = () => {
     if (onClick) {
-      return onClick(data.chapter_id.toString())
-      console.log(data.chapter_id.toString());
+      return onClick(data.chapter_id.toString());
     }
-
-  console.log(data.chapter_id.toString());
- return player.setId(data.chapter_id.toString());
+  
+    return player.setId(data.chapter_id.toString());
   };
 
   return (
@@ -54,14 +54,16 @@ const MediaItem: React.FC<MediaItemProps> = ({
         <img
           src={imageUrl || "/images/album3.jpg"}
           alt="MediaItem"
+          width={60}
+          height={60}
           className="object-cover"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
-        <p className="text-white w-32 text-xs">{data.chapter_title}</p>
+        <p className="text-white w-32 text-sm">{data.chapter_title}</p>
       </div>
     </div>
   );
 }
 
-export default MediaItem;
+export default MediaItemSQL;

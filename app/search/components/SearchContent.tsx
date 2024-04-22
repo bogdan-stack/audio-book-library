@@ -1,6 +1,6 @@
 "use client";
 
-import { Book } from "@/types";
+import { Book, Audiobook, Chapter } from "@/types";
 import MediaItem from "@/components/MediaItem";
 //import LikeButton from "@/components/LikeButton";
 import useOnPlay from "@/hooks/useOnPlay";
@@ -8,10 +8,14 @@ import { useUser } from "@/hooks/useUserAuth";
 
 interface SearchContentProps {
   books: Book[];
+  audiobooks: Audiobook[];
+  chapters: Chapter[];
 }
 
 const SearchContent: React.FC<SearchContentProps> = ({
-  books
+  books,
+  audiobooks,
+  chapters
 }) => {
   const onPlay = useOnPlay(books);
   const user = useUser();
@@ -41,10 +45,13 @@ const SearchContent: React.FC<SearchContentProps> = ({
           className="flex items-center gap-x-4 w-full"
         >
           <div className="flex-1">
-            <MediaItem
-              onClick={(id: string) => onPlay(id)}
-              data={book}
-            />
+          {chapters.map((chapter: Chapter) => (
+  <MediaItem
+    key={chapter.chapter_id}
+    onClick={(id: string) => onPlay(id)}
+    data={chapter}
+  />
+))}
           </div>
         </div>
       ))}

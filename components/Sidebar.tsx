@@ -7,6 +7,7 @@ import Box from "./Box";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
 import { Book } from "@/types";
+import { useUser } from "@/hooks/useUserAuth";
 
 interface SidebarProps {
     children: React.ReactNode;
@@ -18,6 +19,7 @@ const Sidebar:React.FC<SidebarProps> = ({
     children,
     books
 }) => {
+const user = useUser();
 const pathname = usePathname();
 
 const routes = useMemo(()=> [
@@ -27,13 +29,13 @@ const routes = useMemo(()=> [
         active: pathname !== '/search',
         href: '/'
     },
-    {
+    ...(user ? [{
         icon: BiSearch,
         label: 'Caută',
         active: pathname === '/search',
         href: '/search'
-    }
-],[pathname]);
+      }] : [])
+    ],[pathname, user]);
 
     return (
         <div className="flex h-full">

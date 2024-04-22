@@ -1,4 +1,7 @@
 import getBooksByTitle from "@/actions/getBooksByTitle";
+import getAudiobooks from "@/actions/getAudiobooks";
+import getChapters from "@/actions/getChapters";
+
 import SearchInput from "@/components/SearchInput";
 import Header from "@/components/Header";
 
@@ -12,6 +15,8 @@ interface SearchProps {
 
 const Search = async ({ searchParams }: SearchProps) => {
   const books = await getBooksByTitle(searchParams.denumire);
+  const audiobooks = await getAudiobooks();
+  const chapters = await getChapters();
 
   return (
     <div
@@ -32,7 +37,7 @@ const Search = async ({ searchParams }: SearchProps) => {
           <SearchInput />
         </div>
       </Header>
-      <SearchContent books={books} />
+      <SearchContent books={books} chapters={chapters} audiobooks={audiobooks}/>
     </div>
   );
 }

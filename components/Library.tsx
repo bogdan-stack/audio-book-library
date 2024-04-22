@@ -73,13 +73,7 @@ const Library: React.FC<LibraryProps> = ({
             mt-4
             px-3
             ">
-                {books.map((item) =>(
-                    <MediaItem 
-                    onClick={() => {}}
-                    key={item.id}
-                    data={item}
-                    />
-                ))}
+                Test !
             </div>
         </div>
     );

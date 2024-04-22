@@ -7,22 +7,24 @@ import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 
 
-import { Book } from "@/types";
+import { Chapter, Audiobook } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 
-import MediaItem from "./MediaItem";
+import MediaItemSQL from "./MediaItemSQL";
 import Slider from "./Slider";
 
 
 interface PlayerContentProps {
-  book: Book;
-  bookUrl: string;
+  chapter: Chapter;
+  audiobook: Audiobook;
+  
 }
 
 const PlayerContent: React.FC<PlayerContentProps> = ({
-  book,
-  bookUrl
+  chapter,
+  audiobook,
 }) => {
+  
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -62,9 +64,9 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
-  
+
   const [play, { pause, sound }] = useSound(
-    bookUrl,
+    chapter.chapter_path,
     {
       volume: volume,
       onplay: () => {
@@ -147,7 +149,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({
     <div className="flex h-auto w-full bottom-0">
         <div className="flex w-full justify-start">
           <div className="flex items-center gap-x-4">
-            <MediaItem data={book} />
+            <MediaItemSQL data={chapter} audiobookData={audiobook} />
           </div>
         </div>
       <div className="flex items-center gap-x-4">

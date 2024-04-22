@@ -101,6 +101,76 @@ app.get('/verify', async (req, res) => {
   }
 });
 
+app.get('/allAudiobooks', async (req, res) => {
+  try {
+    let pool = await getDbConnection();
+    let result = await pool.request()
+      .query(`SELECT * FROM dbo.Audiobooks`); // replace 'dbo.Audiobooks' with your actual audiobooks table name
+
+    if (result.recordset.length > 0) {
+      res.json(result.recordset);
+    } else {
+      res.status(404).json({ message: 'No audiobooks found' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.toString() });
+  }
+});
+
+app.get('/allChapters', async (req, res) => {
+  try {
+    let pool = await getDbConnection();
+    let result = await pool.request()
+      .query(`SELECT * FROM dbo.Chapters`); // replace 'dbo.Chapters' with your actual chapters table name
+
+    if (result.recordset.length > 0) {
+      res.json(result.recordset);
+    } else {
+      res.status(404).json({ message: 'No chapters found' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.toString() });
+  }
+});
+
+app.get('/chapter', async (req, res) => {
+  try {
+    let pool = await getDbConnection();
+    let result = await pool.request()
+      .query(`SELECT * FROM dbo.Chapters WHERE chapter_id = '${ req.query.chapter_id }'`); // replace 'dbo.Chapters' with your actual chapters table name
+
+    if (result.recordset.length > 0) {
+      res.json(result.recordset);
+    } else {
+      res.status(404).json({ message: 'No chapters found' });
+    }
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.toString() });
+  }
+});
+
+app.get('/audiobook', async (req, res) => {
+  try {
+    let pool = await getDbConnection();
+    let result = await pool.request()
+      .query(`SELECT * FROM dbo.Audiobooks WHERE audiobook_id = '${ req.query.audiobook_id }'`); // replace 'dbo.Chapters' with your actual chapters table name
+
+    if (result.recordset.length > 0) {
+      res.json(result.recordset);
+    } else {
+      res.status(404).json({ message: 'No audiobook found' });
+    }
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.toString() });
+  }
+});
+
 const start = () => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

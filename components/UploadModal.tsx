@@ -11,6 +11,9 @@ import Button from "./Button";
 import { toast } from "react-hot-toast";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
+import Select from "./Select";
+import { useAudiobooks } from "@/hooks/useAudiobooks";
+import { Audiobook } from "@/types";
 
 const UploadModal = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +21,18 @@ const UploadModal = () => {
     const { user } = useUser();
     const supabaseClient = useSupabaseClient();
     const router = useRouter();
+
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+
+    const {audiobooks} = useAudiobooks();
+     console.log(audiobooks);
+
+     const formattedAudiobooks = audiobooks.map((audiobook: Audiobook) => ({
+        value: audiobook.audiobook_id.toString(),
+        label: audiobook.audiobook_title,
+      }));
+
+
 
     const {
         register,
@@ -115,10 +130,11 @@ const UploadModal = () => {
   return (
     <Modal
         title="Adaugă un Audiobook sau un Capitol nou"
-        description="Aveți posibilitatea să adăugați un audiobook sau un capitol nou pentru un audiobook existent."
+        description=""
         isOpen={uploadModal.isOpen}
         onChange={onChange}
     >
+        <div className=" overflow-y-auto max-h-[calc(100vh-12rem)]">
         <form
         onSubmit={handleSubmit(onSubmit)}
         className="
@@ -127,13 +143,74 @@ const UploadModal = () => {
         gap-y-4
         "
         >
+            <div className="flex items-center space-x-4">
+            <Input
+                        className="w-5 h-5"
+                        id="checkbox"
+                        type="checkbox"
+                        checked={isCheckboxChecked}
+                        onChange={() => setIsCheckboxChecked(!isCheckboxChecked)}
+                    />
+            <div className=" text-sm">
+                Bifează dacă dorești să adaugi un capitol nou.
+            </div>
+            </div>
+            <div>
+                <div className="
+                pb-1
+                ">
+                    Selectează audiobook-ul
+                </div>
+                <Select
+                id="audiobook"
+                options={formattedAudiobooks}
+                disabled={!isCheckboxChecked}
+            />
+            </div>
+
+            <div>
+                <div className="
+                pb-1
+                ">
+                    Denumirea noului audiobook
+                </div>
+            <Input
+                id="denumire"
+                disabled={isLoading || isCheckboxChecked}
+                {...register("denumire", { required: true })}
+                placeholder="Denumirea audiobook-ului"
+            />
+            </div>
+            <div>
+                <div className="
+                pb-1
+                ">
+                    Selectează coperta audiobook-ului
+                </div>
+                <Input
+                id="image"
+                type="file"
+                disabled={isLoading || isCheckboxChecked}
+                accept="image/*"
+                {...register("image", { required: true })}
+            />
+            </div>
+            <div>
+                <div className="
+                pb-1
+                ">
+                    Titlul capitolului
+                </div>
             <Input
                 id="denumire"
                 disabled={isLoading}
                 {...register("denumire", { required: true })}
-                placeholder="Denumirea audiobook-ului"
+                placeholder="Denumirea capitolului"
             />
-            <div>
+            </div>
+
+
+            <div className="pb-1">
                 <div className="
                 pb-1
                 ">
@@ -147,24 +224,13 @@ const UploadModal = () => {
                 {...register("book", { required: true })}
             />
             </div>
-            <div>
-                <div className="
-                pb-1
-                ">
-                    Selectează imaginea audiobook-ului
-                </div>
-                <Input
-                id="image"
-                type="file"
-                disabled={isLoading}
-                accept="image/*"
-                {...register("image", { required: true })}
-            />
-            </div>
+
             <Button disabled={isLoading} type="submit">
                 Încarcă
             </Button>
+
         </form>
+</div>
     </Modal>
     );
 }

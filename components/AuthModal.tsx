@@ -19,7 +19,7 @@ export const AuthModal = () => {
     const { onClose, isOpen } = useAuthModal();
 
     useEffect(() => {
-      const emailRegex = /^[\w-]+(\.[\w-]+)*@(navy|mapn|forter|roaf|gmail)\.(com|ro)$/;
+      const emailRegex = /^[\w-]+(\.[\w-]+)*@(navy|mapn|forter|roaf|gmail|yahoo)\.(com|ro)$/;
       setIsEmailValid(emailRegex.test(loginEmail));
   }, [loginEmail]);
 

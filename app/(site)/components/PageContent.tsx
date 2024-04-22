@@ -1,20 +1,31 @@
 "use client";
-import { Book } from "@/types";
+import { Book, Chapter } from "@/types";
+import { Audiobook} from "@/types";
 import BookItem from "@/components/BookItem";
+import AudiobookItem from "@/components/AudiobookItem";
 import useOnPlay from "@/hooks/useOnPlay";
 import { useUser } from "@/hooks/useUserAuth";
+import useOnPlayChapter from "@/hooks/useOnPlayChapter";
 
 interface PageContentProps {
     books: Book[];
+    audiobooks: Audiobook[];
+    chapters: Chapter[];
 }
 
 const PageContent: React.FC<PageContentProps> = ({
-    books
+    books,
+    audiobooks,
+    chapters
 }) => {
-    const onPlay = useOnPlay(books);
+    const onPlay = useOnPlayChapter(chapters);
     const user = useUser();
+    const mergedData = audiobooks.map(audiobook => {
+        const chapter = chapters.find(chapter => chapter.audiobook_id === audiobook.audiobook_id);
+        return { audiobook, chapter };
+      });
 
-    if (books.length === 0 || !user) {
+    if (audiobooks.length === 0 || !user) {
         return (
         <div className="
         mt-4
@@ -25,6 +36,7 @@ const PageContent: React.FC<PageContentProps> = ({
         )
     }
   return (
+    <>
     <div
     className="
     grid
@@ -46,6 +58,31 @@ const PageContent: React.FC<PageContentProps> = ({
         />
     ))}
     </div>
+
+    <div
+    className="
+    grid
+    grid-cols-2
+    sm:grid-cols-3
+    md:grid-cols-3
+    lg:grid-cols-4
+    xl:grid-cols-5
+    2xl:grid-cols-8
+    gap-4
+    mt-4
+    "
+    >
+    {mergedData.map((item) => (
+        <AudiobookItem
+            key={item.audiobook.audiobook_id}
+            onClick={(id:string) => onPlay(id)}
+            audiobookData={item.audiobook}
+            chapterData={item.chapter}
+        />
+    ))}
+    </div>
+
+    </>
   )
 }
 

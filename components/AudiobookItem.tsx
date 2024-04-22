@@ -1,25 +1,31 @@
 "use client";
 
 import { Book } from "@/types";
+import { Audiobook, Chapter } from "@/types";
 
-import  useLoadImage from "@/hooks/useLoadImage";
 import Image from "next/image";
 import PlayButton from "./PlayButton";
 
-interface BookItemProps {
-  data: Book;
 
+interface AudiobookItemProps {
+  audiobookData: Audiobook;
+  chapterData?: Chapter;
   onClick: (id: string) => void
 };
 
-const BookItem: React.FC<BookItemProps> = ({
-  data,
+const AudiobookItem: React.FC<AudiobookItemProps> = ({
+  audiobookData,
+  chapterData,
   onClick
 }) => {
-  const imagePath = useLoadImage(data);
+  const imagePath = audiobookData.cover_path;
   return (
     <div
-    onClick={() => onClick(data.id)}
+    onClick={() => {
+      if (chapterData) {
+        onClick(chapterData.chapter_id.toString())
+      }
+    }}
     className="
     relative
     group
@@ -46,16 +52,15 @@ const BookItem: React.FC<BookItemProps> = ({
         rounded-md
         overflow-hidden
         ">
-          <Image
+          <img
           className="object-cover"
           src={imagePath || '/images/album3.jpg'}
-          fill
           alt="Image"
           />
         </div>
         <div className="flex flex-col items-start w-full pt-4 gap-y-1">
             <p className="font-semibold truncate w-full">
-              {data.denumire}
+              {audiobookData.audiobook_title}
             </p>
           </div>
           <div className="
@@ -69,4 +74,4 @@ const BookItem: React.FC<BookItemProps> = ({
   );
 }
 
-export default BookItem;
+export default AudiobookItem;

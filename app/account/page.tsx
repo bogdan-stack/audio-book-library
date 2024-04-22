@@ -3,6 +3,8 @@
 import Header from "@/components/Header";
 import { useState } from "react";
 import AccountContent from "./components/AccountContent";
+import { useUser } from "@/hooks/useUserAuth";
+import { redirect } from "next/navigation";
 
 
 export const revalidate = 0;
@@ -12,7 +14,11 @@ interface AccountProps {
 };
 
 const Account = () => {
-  
+
+const user = useUser();
+if (user === null) {
+  redirect('/')
+}
 
   return (
     <div

@@ -2,7 +2,8 @@
 
 import qs from "query-string";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
+import { useUser } from "@/hooks/useUserAuth";
 
 import useDebounce from "@/hooks/useDebounce";
 
@@ -12,6 +13,12 @@ const SearchInput = () => {
   const router = useRouter();
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce<string>(value, 500);
+  const user = useUser();
+
+  if (user === null) {
+    redirect('/');
+  }
+
 
   useEffect(() => {
     const query = {
